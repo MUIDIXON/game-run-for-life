@@ -1,0 +1,230 @@
+<!--
+Program Name: index.html
+
+Description:
+This file builds the user interface for the game "Run for Life".
+It contains the menu screen, game screen, settings screen, ending screen,
+and player guide screen. It also loads all JavaScript files 
+for the game logic and user interaction.
+
+Inputs:
+- User button clicks
+- Keyboard input handled by the JavaScript files
+
+Outputs / Results:
+- Displays the correct game screen 
+- sstart canvas where the game start
+- Loads all game scripts and visual 
+
+Called By:
+- Opened directly by the web browser
+
+Calls:
+- init() through body onload
+- Loads Button.js
+- Loads Game.js
+- Loads GameHelper.js
+- Loads Meter.js
+- Loads Main.js
+-->
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>:run for life</title>
+        <!--Below is the style of each screens , button , title , screen boxes. -->
+		<style>
+            
+			#menuScreen {
+			display: flex;
+			}
+
+            #gameScreen {
+            display: none;
+            }
+            #settingScreen {
+            display: none;
+            }
+            #endingScreen {
+			display: none;
+			}
+             #guideScreen {
+			display: none;
+			}
+            #menuScreen,
+            #gameScreen,
+            #settingScreen,
+            #endingScreen,
+            #guideScreen {
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+
+                background-image: url("resources/background.png");
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+            }
+			body { background-color: #000000; }
+			canvas { background-color: #222222; }
+
+            button {
+                background: linear-gradient(to bottom, #4CAF50, #2E7D32);
+                color: white;
+                border: none;
+                padding: 12px 28px;
+                font-size: 18px;
+                font-weight: bold;
+                border-radius: 10px;
+                cursor: pointer;
+                box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+                transition: 0.2s;
+            }
+             #playButton {
+                background: linear-gradient(to bottom, #4CAF50, #2E7D32);
+            }
+
+            #backButton {
+                background: linear-gradient(to bottom, #EF5350, #C62828);
+            }
+             #settingButton {
+                 background: linear-gradient(to bottom, #4CAF50, #2E7D32);
+            }
+            #backToSettingButton{
+                background: linear-gradient(to bottom, #4CAF50, #2E7D32);
+            }
+
+            button:hover {
+                background: linear-gradient(to bottom, #66BB6A, #388E3C);
+                transform: scale(1.05);
+            }
+
+            button:active {
+                transform: scale(0.98);
+            }
+            .menuBox {
+                width: 500px;
+                max-width: 80%;
+                background-color: #2b2b2b;
+                border: 3px solid #ffffff;
+                border-radius: 20px;
+                padding: 40px;
+                text-align: center;
+                box-shadow: 0 0 20px rgba(255,255,255,0.15);
+                
+                background-image: url("resources/menu.png");
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+            }
+             .endingBox {
+                width: 500px;
+                max-width: 80%;
+                background-color: #2b2b2b;
+                border: 3px solid #ffffff;
+                border-radius: 20px;
+                padding: 40px;
+                text-align: center;
+                box-shadow: 0 0 20px rgba(255,255,255,0.15);
+            }
+             .guideBox {
+                width: 500px;
+                max-width: 80%;
+                background-color: #2b2b2b;
+                border: 3px solid #ffffff;
+                border-radius: 20px;
+                padding: 40px;
+                text-align: center;
+                box-shadow: 0 0 20px rgba(255,255,255,0.15);
+            }
+
+            .menuTitle {
+                font-size: 48px;
+                margin-bottom: 30px;
+                letter-spacing: 2px;
+                 color: white;
+            }
+
+
+            .settingBox {
+                width: 240px;
+                 max-width: 80%;
+                background-color: #2b2b2b;
+                border: 2px solid white;
+                border-radius: 18px;
+                padding: 30px;
+                box-shadow: 0 0 20px rgba(255,255,255,0.10);
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+                align-items: center;
+            }
+
+            .settingTitle {
+                margin: 0 0 10px 0;
+                text-align: center;
+                font-size: 32px;
+            }
+            .labelTitle {
+                display: block;
+                font-size: 22px;
+                font-weight: bold;
+                margin-bottom: 8px;
+            }
+            
+
+		</style>
+	</head>
+    <!-- when the page loads, call the init function to initialize the game -->
+	<body onload="init();">
+
+         <div id="menuScreen">
+        <div class="menuBox">
+            <h1 class="menuTitle">Run for Life</h1>
+            <button id="playButton">Play Game</button>
+        </div>
+    </div>
+     <div id="gameScreen">
+        <div class="gameLayout">
+             <!-- Game canvas -->
+            <canvas id="gameCanvas" width="512" height="384"></canvas>
+            <!-- Settings button -->
+            <button id="settingButton">Settings</button>
+            <!-- Settings box -->
+            
+       </div>
+    </div>
+
+    <div id="settingScreen">
+    <div class="settingBox">
+                <button id="resumeButton">Resume</button>
+                <button id="guideButton">Player Guide</button>
+                <button id="backButton">Back to Menu</button>
+            </div>  
+        </div>
+
+    <div id="endingScreen">
+        <div class="endingBox">
+            <h1 id="endingText">Run for Life</h1>
+            <button id="replayButton">Back to menu</button>
+        </div>
+    </div>
+    <div id="guideScreen">
+        <div class="guideBox">
+            <h1 id="guide">D is forward , S right , W is left and A is back </h1>
+            <h1 id="guide">Avoid bombs and reach the goal to escape the haunted house!!</h1>
+            <button id="backToSettingButton">Go back</button>
+        </div>
+    </div>
+
+        <script src="Button.js"></script>
+        <script src="Game.js"></script>
+        <script src="GameHelper.js"></script>
+        <script src="Meter.js"></script>
+        <script src="Main.js"></script>
+		
+		
+		
+	</body>
+</html>
